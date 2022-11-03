@@ -1,0 +1,84 @@
+{
+  "name": "basic-example",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/basic-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/basic-example",
+        "index": "apps/basic-example/src/index.html",
+        "baseHref": "/",
+        "main": "apps/basic-example/src/main.tsx",
+        "polyfills": "apps/basic-example/src/polyfills.ts",
+        "tsConfig": "apps/basic-example/tsconfig.app.json",
+        "assets": [
+          "apps/basic-example/src/favicon.ico",
+          "apps/basic-example/src/assets"
+        ],
+        "styles": ["apps/basic-example/src/styles.css"],
+        "scripts": [],
+        "webpackConfig": "@nrwl/react/plugins/webpack"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/basic-example/src/environments/environment.ts",
+              "with": "apps/basic-example/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/webpack:dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "basic-example:build",
+        "hmr": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "basic-example:build:development"
+        },
+        "production": {
+          "buildTarget": "basic-example:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/basic-example/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/basic-example/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
