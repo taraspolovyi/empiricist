@@ -1,52 +1,18 @@
+import { useExperiment } from './context';
+import { makeNullComponent } from './utils';
 import * as React from 'react';
 
-export interface Experiments {
+export interface ExperimentsConfig {
   [key: string]: string;
 }
 
-interface ExpContext {
-  getExperiment(id: string | null): string | null;
-}
-
-const ExpContext = React.createContext<ExpContext>({
-  getExperiment: () => null,
-});
-
-interface ExperimentallyProps extends React.PropsWithChildren {
-  experiments: Experiments;
-}
-
-export const Experimentally: React.FC<ExperimentallyProps> = ({
-  children,
-  experiments,
-}) => {
-  const getExperiment = (id: string) => experiments[id] ?? null;
-
-  return (
-    <ExpContext.Provider value={{ getExperiment }}>
-      {children}
-    </ExpContext.Provider>
-  );
-};
-
-export function useExperiment(id: string | null): string | null {
-  const ctx = React.useContext(ExpContext);
-  return ctx.getExperiment(id);
-}
-
-type Experimental<T> = React.ComponentType<T> & {
+export type Experimental<T> = React.ComponentType<T> & {
   __experimentId?: string;
   withVariation<U>(
     id: string,
     Variant: React.ComponentType<U>
   ): Experimental<T & U>;
 };
-
-function makeNullComponent() {
-  return function NullComponent() {
-    return null;
-  };
-}
 
 export function createExperiment<T>(
   id: string,
