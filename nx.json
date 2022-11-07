@@ -1,6 +1,10 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "experimentaly",
+  "npmScope": "experimentally",
+  "workspaceLayout": {
+    "libsDir": "packages",
+    "appsDir": "examples"
+  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
