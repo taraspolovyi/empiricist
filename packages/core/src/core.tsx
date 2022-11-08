@@ -18,21 +18,10 @@ export function createExperiment<T>(
   id: string,
   DefaultComponent: React.ComponentType<T> = makeNullComponent()
 ): Experimental<T> {
-  const ExperimentWrapper: Experimental<T> = (props) => (
+  const ExperimentComponent: React.FC<T> = (props) => (
     <DefaultComponent {...(props as T & JSX.IntrinsicAttributes)} />
   );
-
-  ExperimentWrapper.__experimentId = id;
-
-  ExperimentWrapper.withVariation = function withVariation<U>(
-    id: string,
-    Variant: React.ComponentType<U>
-  ): Experimental<T & U> {
-    const applyVariation = createVariation<T, U>(id, Variant);
-    return applyVariation(ExperimentWrapper);
-  };
-
-  return ExperimentWrapper;
+  return _makeExperimentalFrom(id, ExperimentComponent);
 }
 
 export function createVariation<T, U>(
@@ -44,7 +33,7 @@ export function createVariation<T, U>(
       console.warn(`${Variant.name} is not experimental.`);
     }
 
-    const VariationWrapper: Experimental<T & U> = (props) => {
+    const VariationComponent: React.FC<T & U> = (props) => {
       const variationId = useExperiment(Component.__experimentId ?? null);
       return variationId === id ? (
         <Variant {...(props as U & JSX.IntrinsicAttributes)} />
@@ -53,16 +42,22 @@ export function createVariation<T, U>(
       );
     };
 
-    VariationWrapper.withVariation = function withVariation<S>(
-      id: string,
-      Variant: React.ComponentType<S>
-    ): Experimental<T & U & S> {
-      const applyVariation = createVariation<T & U, S>(id, Variant);
-      return applyVariation(VariationWrapper);
-    };
-
-    VariationWrapper.__experimentId = Component.__experimentId;
-
-    return VariationWrapper;
+    return _makeExperimentalFrom(Component.__experimentId, VariationComponent);
   };
+}
+
+function _makeExperimentalFrom<T>(
+  experimentId: string | undefined,
+  Component: React.ComponentType<T>
+): Experimental<T> {
+  const ExpComponent = Component as Experimental<T>;
+  ExpComponent.__experimentId = experimentId;
+  ExpComponent.withVariation = function withVariation<S>(
+    id: string,
+    Variant: React.ComponentType<S>
+  ): Experimental<T & S> {
+    const applyVariation = createVariation<T, S>(id, Variant);
+    return applyVariation(ExpComponent);
+  };
+  return ExpComponent;
 }
