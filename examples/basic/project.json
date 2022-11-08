@@ -1,7 +1,7 @@
 {
-  "name": "basic-example",
+  "name": "basic",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "examples/basic-example/src",
+  "sourceRoot": "examples/basic/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -10,17 +10,17 @@
       "defaultConfiguration": "production",
       "options": {
         "compiler": "babel",
-        "outputPath": "dist/examples/basic-example",
-        "index": "examples/basic-example/src/index.html",
+        "outputPath": "dist/examples/basic",
+        "index": "examples/basic/src/index.html",
         "baseHref": "/",
-        "main": "examples/basic-example/src/main.tsx",
-        "polyfills": "examples/basic-example/src/polyfills.ts",
-        "tsConfig": "examples/basic-example/tsconfig.app.json",
+        "main": "examples/basic/src/main.tsx",
+        "polyfills": "examples/basic/src/polyfills.ts",
+        "tsConfig": "examples/basic/tsconfig.app.json",
         "assets": [
-          "examples/basic-example/src/favicon.ico",
-          "examples/basic-example/src/assets"
+          "examples/basic/src/favicon.ico",
+          "examples/basic/src/assets"
         ],
-        "styles": ["examples/basic-example/src/styles.css"],
+        "styles": ["examples/basic/src/styles.css"],
         "scripts": [],
         "webpackConfig": "@nrwl/react/plugins/webpack"
       },
@@ -34,8 +34,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "examples/basic-example/src/environments/environment.ts",
-              "with": "examples/basic-example/src/environments/environment.prod.ts"
+              "replace": "examples/basic/src/environments/environment.ts",
+              "with": "examples/basic/src/environments/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -51,15 +51,15 @@
       "executor": "@nrwl/webpack:dev-server",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "basic-example:build",
+        "buildTarget": "basic:build",
         "hmr": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "basic-example:build:development"
+          "buildTarget": "basic:build:development"
         },
         "production": {
-          "buildTarget": "basic-example:build:production",
+          "buildTarget": "basic:build:production",
           "hmr": false
         }
       }
@@ -68,14 +68,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["examples/basic-example/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["examples/basic/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "examples/basic-example/jest.config.ts",
+        "jestConfig": "examples/basic/jest.config.ts",
         "passWithNoTests": true
       }
     }
