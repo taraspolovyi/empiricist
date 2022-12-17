@@ -1,5 +1,5 @@
 {
-  "name": "experimentally",
+  "name": "empiricist",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -9,11 +9,12 @@
   },
   "private": true,
   "dependencies": {
-    "core-js": "^3.26.0",
+    "core-js": "^3.6.5",
+    "fp-ts": "^2.13.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "regenerator-runtime": "0.13.7",
-    "tslib": "^2.4.1"
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
     "@nrwl/cli": "15.0.10",
@@ -28,7 +29,7 @@
     "@testing-library/react": "13.4.0",
     "@trivago/prettier-plugin-sort-imports": "^3.4.0",
     "@types/jest": "28.1.1",
-    "@types/node": "16.11.7",
+    "@types/node": "18.7.18",
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.42.1",

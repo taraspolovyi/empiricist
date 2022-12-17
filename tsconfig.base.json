@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@experimentally/core": ["packages/core/src/index.ts"]
+      "@empiricist/empiricist": ["packages/empiricist/src/index.ts"],
+      "@empiricist/example-utils": ["packages/example-utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

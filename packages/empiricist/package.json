@@ -1,0 +1,7 @@
+{
+  "name": "@empiricist/empiricist",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "react": ">=16.8"
+  }
+}

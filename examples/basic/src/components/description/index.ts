@@ -1,7 +1,8 @@
-import { Description as EnabledDescription } from './Description';
-import { createExperiment } from '@experimentally/core';
+import { experiment } from '@empiricist/empiricist';
 
-export const Description = createExperiment('description').withVariation(
+import { Description as EnabledDescription } from './Description';
+
+export const Description = experiment('description').withVariation(
   'true',
   EnabledDescription
 );

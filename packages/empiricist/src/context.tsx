@@ -1,6 +1,7 @@
-import { ExperimentsConfig } from './core';
-import { constNull } from './utils';
 import * as React from 'react';
+
+import { ExperimentsConfig } from './types';
+import { constNull } from './utils';
 
 export interface ExpContextValue {
   getExperiment(id: string | null): string | null;
@@ -10,11 +11,11 @@ export const ExpContext = React.createContext<ExpContextValue>({
   getExperiment: constNull,
 });
 
-export interface ExperimentallyProps extends React.PropsWithChildren {
+export interface EmpiricistProps extends React.PropsWithChildren {
   experiments: ExperimentsConfig;
 }
 
-export const Experimentally: React.FC<ExperimentallyProps> = ({
+export const Empiricist: React.FC<EmpiricistProps> = ({
   children,
   experiments,
 }) => {

@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "experimentally",
+  "npmScope": "empiricist",
   "workspaceLayout": {
     "libsDir": "packages",
     "appsDir": "examples"
