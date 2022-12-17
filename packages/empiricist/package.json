@@ -1,6 +1,6 @@
 {
   "name": "empiricist",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "repository": {
     "type": "github",
     "url": "https://github.com/taraspolovyi/empiricist.git"
@@ -9,6 +9,7 @@
     "name": "Taras Polovyi",
     "email": "tpolovyi@gmail.com"
   },
+  "license": "MIT",
   "keywords": [
     "react",
     "ab-testing",
