@@ -1,6 +1,6 @@
+import { Empiricist, ExperimentsConfig } from 'empiricist';
 import * as React from 'react';
 
-import { Empiricist, ExperimentsConfig } from '@empiricist/empiricist';
 import { getUrlExperiments } from '@empiricist/example-utils';
 
 import { Description } from '../components/description';

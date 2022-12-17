@@ -1,4 +1,4 @@
-import { experiment } from '@empiricist/empiricist';
+import { experiment } from 'empiricist';
 
 import { Heading as DefaultHeading } from './Heading';
 import { SmallerHeading } from './SmallerHeading';

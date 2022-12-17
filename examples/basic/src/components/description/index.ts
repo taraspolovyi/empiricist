@@ -1,4 +1,4 @@
-import { experiment } from '@empiricist/empiricist';
+import { experiment } from 'empiricist';
 
 import { Description as EnabledDescription } from './Description';
 

@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@empiricist/empiricist": ["packages/empiricist/src/index.ts"],
+      "empiricist": ["packages/empiricist/src/index.ts"],
       "@empiricist/example-utils": ["packages/example-utils/src/index.ts"]
     }
   },

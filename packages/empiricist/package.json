@@ -1,6 +1,20 @@
 {
-  "name": "@empiricist/empiricist",
+  "name": "empiricist",
   "version": "0.0.1",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/taraspolovyi/empiricist.git"
+  },
+  "author": {
+    "name": "Taras Polovyi",
+    "email": "tpolovyi@gmail.com"
+  },
+  "keywords": [
+    "react",
+    "ab-testing",
+    "feature-flag",
+    "component"
+  ],
   "peerDependencies": {
     "react": ">=16.8"
   }

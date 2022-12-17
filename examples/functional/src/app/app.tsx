@@ -1,6 +1,5 @@
+import { Empiricist, ExperimentsConfig } from 'empiricist';
 import * as React from 'react';
-
-import { Empiricist, ExperimentsConfig } from '@empiricist/empiricist';
 
 import { Description } from '../components/description';
 import { Greeting } from '../components/greeting';

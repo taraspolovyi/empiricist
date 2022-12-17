@@ -1,6 +1,5 @@
+import { applyVariation, experiment } from 'empiricist';
 import { pipe } from 'fp-ts/function';
-
-import { applyVariation, experiment } from '@empiricist/empiricist';
 
 import { Heading as DefaultHeading } from './Heading';
 import { SmallerHeading } from './SmallerHeading';

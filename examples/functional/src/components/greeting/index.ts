@@ -1,10 +1,5 @@
+import { applySiblingAfter, applyVariation, experiment } from 'empiricist';
 import { pipe } from 'fp-ts/function';
-
-import {
-  applySiblingAfter,
-  applyVariation,
-  experiment,
-} from '@empiricist/empiricist';
 
 import { FormalGreeting } from './FormalGreeting';
 import { Greeting as DefaultGreeting } from './Greeting';

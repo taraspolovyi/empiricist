@@ -1,4 +1,4 @@
-import { experiment } from '@empiricist/empiricist';
+import { experiment } from 'empiricist';
 
 import { FormalGreeting } from './FormalGreeting';
 import { Greeting as DefaultGreeting } from './Greeting';

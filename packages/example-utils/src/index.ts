@@ -1,4 +1,4 @@
-import { ExperimentsConfig } from '@empiricist/empiricist';
+import { ExperimentsConfig } from 'empiricist';
 
 export function getUrlExperiments(): ExperimentsConfig {
   const searchParams = new URLSearchParams(window.location.search);
