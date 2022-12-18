@@ -76,7 +76,7 @@ Unlike, the previous one, the method keeps the default component and, if the pro
 withSiblingAfter(id: string, SiblingComponent: React.ComponentType);
 ```
 
-Is similar to [withSiblingBefore](./#withSiblingBefore) but the "sibling" is added after the target component.
+Is similar to [withSiblingBefore](#withSiblingBefore) but the "sibling" is added after the target component.
 
 #### withInnerWrapper(id, WrapperComponent)
 
