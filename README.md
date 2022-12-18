@@ -1,5 +1,7 @@
 # Empiricist
 
+![tree shaking is supported](https://badgen.net/bundlephobia/tree-shaking/empiricist) ![minimized size](https://badgen.net/bundlephobia/min/empiricist) ![minimized+gzip size](https://badgen.net/bundlephobia/minzip/empiricist)
+
 Empiricist is a utility library for organizing conditional rendering of experimental React components (for A/B testing or gradual releases) in a declarative way that would not affect the components structure, but instead allows to "patch" the components tree in a minimalistic manner.
 
 ## Usage
