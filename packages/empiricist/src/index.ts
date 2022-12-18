@@ -9,4 +9,7 @@ export {
 
 export { Empiricist } from './context';
 
-export type { ExperimentsConfig, Experimental } from './types';
+export type {
+  ExperimentsConfig,
+  ExperimentalComponent as Experimental,
+} from './types';

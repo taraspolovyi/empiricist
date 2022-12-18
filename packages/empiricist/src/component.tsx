@@ -1,19 +1,24 @@
 import * as React from 'react';
 
 import { useExperiment } from './context';
-import { ChildrenTypeIfDefined, Experimental, experimentIdKey } from './types';
+import {
+  ApplyFn,
+  ChildrenTypeIfDefined,
+  ExperimentalComponent,
+  experimentIdKey,
+} from './types';
 import { constNull, omit } from './utils';
 
 /**
- *
- * @param id
- * @param DefaultComponent
- * @returns
+ * Converts a React component to experimental component
+ * @param id identifier of the experiment
+ * @param DefaultComponent component that needs to be converted
+ * @returns a converted component with the assigned experiment
  */
 export function experiment<T>(
   id: string,
   DefaultComponent: React.ComponentType<T> = constNull
-): Experimental<T> {
+): ExperimentalComponent<T> {
   const ExperimentComponent: React.FC<T> = (props) => (
     <DefaultComponent {...(props as T & JSX.IntrinsicAttributes)} />
   );
@@ -21,22 +26,21 @@ export function experiment<T>(
 }
 
 /**
- *
- * @param id
- * @param Variant
- * @returns
+ * If matches the experiment value, replaces target component with the provided one
+ * @param id experiment value
+ * @param Component component to apply
  */
 export function applyVariation<T, U>(
   id: string,
-  Variant: React.ComponentType<U>
+  Component: React.ComponentType<U>
 ) {
-  return (Target: Experimental<T>): Experimental<T & U> => {
+  return (Target: ExperimentalComponent<T>): ExperimentalComponent<T & U> => {
     _assertIsExperimental(Target);
 
     const VariationComponent: React.FC<T & U> = (props) => {
       const variationId = useExperiment(Target[experimentIdKey] ?? null);
       return variationId === id ? (
-        <Variant {...(props as U & JSX.IntrinsicAttributes)} />
+        <Component {...(props as U & JSX.IntrinsicAttributes)} />
       ) : (
         <Target {...(props as T & JSX.IntrinsicAttributes)} />
       );
@@ -47,16 +51,15 @@ export function applyVariation<T, U>(
 }
 
 /**
- *
- * @param id
- * @param Sibling
- * @returns
+ * If matches the experiment value, inserts the provided component after the target component
+ * @param id experiment value
+ * @param Component component to apply
  */
 export function applySiblingAfter<T, U>(
   id: string,
-  Sibling: React.ComponentType<U>
+  Component: React.ComponentType<U>
 ) {
-  return (Target: Experimental<T>): Experimental<T & U> => {
+  return (Target: ExperimentalComponent<T>): ExperimentalComponent<T & U> => {
     _assertIsExperimental(Target);
 
     const SiblingComponent: React.FC<T & U> = (props) => {
@@ -65,7 +68,7 @@ export function applySiblingAfter<T, U>(
         <>
           <Target {...(props as T & JSX.IntrinsicAttributes)} />
           {variationId === id ? (
-            <Sibling {...(props as U & JSX.IntrinsicAttributes)} />
+            <Component {...(props as U & JSX.IntrinsicAttributes)} />
           ) : null}
         </>
       );
@@ -76,16 +79,15 @@ export function applySiblingAfter<T, U>(
 }
 
 /**
- *
- * @param id
- * @param Sibling
- * @returns
+ * If matches the experiment value, inserts the provided component before the target component
+ * @param id experiment value
+ * @param Component component to apply
  */
 export function applySiblingBefore<T, U>(
   id: string,
-  Sibling: React.ComponentType<U>
+  Component: React.ComponentType<U>
 ) {
-  return (Target: Experimental<T>): Experimental<T & U> => {
+  return (Target: ExperimentalComponent<T>): ExperimentalComponent<T & U> => {
     _assertIsExperimental(Target);
 
     const SiblingComponent: React.FC<T & U> = (props) => {
@@ -93,7 +95,7 @@ export function applySiblingBefore<T, U>(
       return (
         <>
           {variationId === id ? (
-            <Sibling {...(props as U & JSX.IntrinsicAttributes)} />
+            <Component {...(props as U & JSX.IntrinsicAttributes)} />
           ) : null}
           <Target {...(props as T & JSX.IntrinsicAttributes)} />
         </>
@@ -105,16 +107,15 @@ export function applySiblingBefore<T, U>(
 }
 
 /**
- *
- * @param id
- * @param Sibling
- * @returns
+ * If matches the experiment value, wraps the target component with the provided one
+ * @param id experiment value
+ * @param Component component to apply
  */
 export function applyOuterWrapper<T, U extends ChildrenTypeIfDefined<T>>(
   id: string,
-  Sibling: React.ComponentType<U>
+  Component: React.ComponentType<U>
 ) {
-  return (Target: Experimental<T>): Experimental<T & U> => {
+  return (Target: ExperimentalComponent<T>): ExperimentalComponent<T & U> => {
     _assertIsExperimental(Target);
 
     const SiblingComponent: React.FC<T & U> = (props) => {
@@ -122,9 +123,9 @@ export function applyOuterWrapper<T, U extends ChildrenTypeIfDefined<T>>(
       const innerProps = props as T & JSX.IntrinsicAttributes;
       const outerProps = omit(props, 'children') as U & JSX.IntrinsicAttributes;
       return variationId === id ? (
-        <Sibling {...outerProps}>
+        <Component {...outerProps}>
           <Target {...innerProps} />
-        </Sibling>
+        </Component>
       ) : (
         <Target {...(props as T & JSX.IntrinsicAttributes)} />
       );
@@ -135,16 +136,16 @@ export function applyOuterWrapper<T, U extends ChildrenTypeIfDefined<T>>(
 }
 
 /**
- *
- * @param id
- * @param Sibling
+ * If matches the experiment value, wraps the target component's children with the provided one
+ * @param id experiment value
+ * @param Component component to apply
  * @returns
  */
 export function applyInnerWrapper<T, U extends ChildrenTypeIfDefined<T>>(
   id: string,
-  Sibling: React.ComponentType<U>
+  Component: React.ComponentType<U>
 ) {
-  return (Target: Experimental<T>): Experimental<T & U> => {
+  return (Target: ExperimentalComponent<T>): ExperimentalComponent<T & U> => {
     _assertIsExperimental(Target);
 
     const SiblingComponent: React.FC<T & U> = (props) => {
@@ -153,7 +154,7 @@ export function applyInnerWrapper<T, U extends ChildrenTypeIfDefined<T>>(
       const outerProps = omit(props, 'children') as T & JSX.IntrinsicAttributes;
       return variationId === id ? (
         <Target {...outerProps}>
-          <Sibling {...innerProps} />
+          <Component {...innerProps} />
         </Target>
       ) : (
         <Target {...(props as T & JSX.IntrinsicAttributes)} />
@@ -166,7 +167,7 @@ export function applyInnerWrapper<T, U extends ChildrenTypeIfDefined<T>>(
 
 function _assertIsExperimental<T>(
   c: React.ComponentType<T>
-): asserts c is Experimental<T> {
+): asserts c is ExperimentalComponent<T> {
   if (!Object.prototype.hasOwnProperty.call(c, experimentIdKey)) {
     throw new Error(`${c.name} is not experimental.`);
   }
@@ -174,57 +175,39 @@ function _assertIsExperimental<T>(
 
 /**
  * Converts a component into Experimental instance by assigning an experiment ID and the required methods
- * @param experimentId
- * @param Component
- * @returns
+ * @param experimentId identifier of the experiment
+ * @param Component component that needs to be converted to ExperimentalComponent
+ * @returns a resulting ExperimentalComponent
  */
 function _makeExperimentalFrom<T>(
-  experimentId: string | undefined,
+  experimentId: string,
   Component: React.ComponentType<T>
-): Experimental<T> {
-  const ExpComponent = Component as Experimental<T>;
+): ExperimentalComponent<T> {
+  const ExpComponent = Component as ExperimentalComponent<T>;
 
   ExpComponent[experimentIdKey] = experimentId;
 
-  ExpComponent.withVariation = function <S>(
-    id: string,
-    Variant: React.ComponentType<S>
-  ): Experimental<T & S> {
-    const applyTo = applyVariation<T, S>(id, Variant);
-    return applyTo(ExpComponent);
-  };
-
-  ExpComponent.withSiblingBefore = function <S>(
-    id: string,
-    Variant: React.ComponentType<S>
-  ): Experimental<T & S> {
-    const applyTo = applySiblingBefore<T, S>(id, Variant);
-    return applyTo(ExpComponent);
-  };
-
-  ExpComponent.withSiblingAfter = function <S>(
-    id: string,
-    Variant: React.ComponentType<S>
-  ): Experimental<T & S> {
-    const applyTo = applySiblingAfter<T, S>(id, Variant);
-    return applyTo(ExpComponent);
-  };
-
-  ExpComponent.withOuterWrapper = function <S extends ChildrenTypeIfDefined<T>>(
-    id: string,
-    Variant: React.ComponentType<S>
-  ): Experimental<T & S> {
-    const applyTo = applyOuterWrapper<T, S>(id, Variant);
-    return applyTo(ExpComponent);
-  };
-
-  ExpComponent.withInnerWrapper = function <S extends ChildrenTypeIfDefined<T>>(
-    id: string,
-    Variant: React.ComponentType<S>
-  ): Experimental<T & S> {
-    const applyTo = applyInnerWrapper<T, S>(id, Variant);
-    return applyTo(ExpComponent);
-  };
+  ExpComponent.withVariation = _bindTo(ExpComponent, applyVariation);
+  ExpComponent.withSiblingBefore = _bindTo(ExpComponent, applySiblingBefore);
+  ExpComponent.withSiblingAfter = _bindTo(ExpComponent, applySiblingAfter);
+  ExpComponent.withOuterWrapper = _bindTo(ExpComponent, applyOuterWrapper);
+  ExpComponent.withInnerWrapper = _bindTo(ExpComponent, applyInnerWrapper);
 
   return ExpComponent;
+}
+
+/**
+ * Binds experiment functions to given ExperimentalComponent
+ * @param ExpComponent ExperimentalComponent function to be bound to
+ * @param applyFn function that needs to be bound
+ * @returns a function bound to the provided ExperimentalComponent
+ */
+function _bindTo<T, U>(
+  ExpComponent: ExperimentalComponent<T>,
+  applyFn: ApplyFn<T, U>
+) {
+  return (id: string, Variant: React.ComponentType<U>) => {
+    const applyTo = applyFn(id, Variant);
+    return applyTo(ExpComponent);
+  };
 }
