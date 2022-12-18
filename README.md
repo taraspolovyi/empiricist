@@ -48,7 +48,7 @@ Also, `Example` component now has props defined as intersection type of `MaybeBe
 
 ## API Reference
 
-### experiment(id, DefaultComponent)
+### experiment
 
 ```ts
 experiment(id: string, DefaultComponent?: React.ComponentType);
@@ -80,7 +80,7 @@ withSiblingAfter(id: string, SiblingComponent: React.ComponentType);
 
 Is similar to [withSiblingBefore](#withSiblingBefore) but the "sibling" is added after the target component.
 
-#### withInnerWrapper(id, WrapperComponent)
+#### withInnerWrapper
 
 ```ts
 withInnerWrapper(id: string, SiblingComponent: React.ComponentType);
@@ -88,7 +88,7 @@ withInnerWrapper(id: string, SiblingComponent: React.ComponentType);
 
 Allows to optionally wrap the target component's children with the provided component.
 
-#### withOuterWrapper(id, WrapperComponent)
+#### withOuterWrapper
 
 ```ts
 withOuterWrapper(id: string, SiblingComponent: React.ComponentType);
